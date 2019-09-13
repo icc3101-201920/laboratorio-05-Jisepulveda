@@ -12,9 +12,7 @@ namespace Laboratorio_4_OOP_201902
             game.AddDecks();
             game.AddCaptains();
             Console.WriteLine(game.Captains[0].Name);
-            CombatCard n = new CombatCard();
-
-            console.Writeline(n.GetType());
+            
         }   
     }
 }

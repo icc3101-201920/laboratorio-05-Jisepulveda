@@ -116,9 +116,27 @@ namespace Laboratorio_4_OOP_201902
             Hint: Utilice los métodos ya creados en Hand y Deck (AddCard y DestroyCard), no se preocupe de la implementacion de estos aun.*/
             int typecard;
 
-            if (deck.Cards[cardId])
+            if (deck.Cards[cardId].GetType() == "CombatCard")
+            {
+                typecard = 1;
+                CombatCard card = deck.Cards[cardId];
+                CombatCard newcombatcard = new CombatCard(card.Name, card.Type, card.Effect, card.AttackPoints, card.Hero);
+                hand.AddCard(newcombatcard);
+                deck.DestroyCard(cardId);
+            }
+            if (deck.Cards[cardId].GetType() == "SpecialCard")
+            {
+                typecard = 2;
+                SpecialCard card = deck.Cards[cardId];
+                SpecialCard newspecialcard = new SpecialCard(card.Name, card.Type, card.Effect);
+                hand.AddCard(newspecialcard);
+                deck.DestroyCard(cardId);
+            }
+
 
             throw new NotImplementedException();
+
+            return;
         }
         public void PlayCard(int cardId, EnumType buffRow = EnumType.None)
         {
@@ -134,7 +152,36 @@ namespace Laboratorio_4_OOP_201902
                         -El metodo AddCard solo requiere la carta.
                 3- Elimine la carta de la mano. 
              */
-            throw new NotImplementedException();
+
+            if (hand.Cards[cardId].GetType() == "CombatCard")
+            {
+                CombatCard card = hand.Cards[cardId];
+                CombatCard newcombatcard = new CombatCard(card.Name, card.Type, card.Effect, card.AttackPoints, card.Hero);
+                board.AddCard(newcombatcard, id);
+                hand.DestroyCard(cardId);
+            }
+
+            if (hand.Cards[cardId].GetType() == "SpecialCard")
+            {
+                SpecialCard card = hand.Cards[cardId];
+                SpecialCard newspecialcard = new SpecialCard(card.Name, card.Type, card.Effect);
+
+                if (card.Type == "buff" || card.Type == "buffmelee" || card.Type == "buffrange" || card.Type == "bufflongRange")
+                {
+                    board.AddCard(newspecialcard, card.Type);
+                }
+
+                if (card.Type == "weather")
+                {
+                    board.AddCard(newspecialcard);
+                }
+
+                hand.DestroyCard(cardId);
+
+            }
+
+                throw new NotImplementedException();
+            return;
         }
         public void ChangeCard(int cardId)
         {
@@ -149,7 +196,33 @@ namespace Laboratorio_4_OOP_201902
                 6- Elimine la carta aleatoria escogida del mazo.
                 7- Agregue la carta original de la mano al mazo.
             */
-            throw new NotImplementedException();
+            Random nrorandom = new Random();
+
+            if (hand.Cards[cardId].GetType() == "CombatCard")
+            {
+                CombatCard card = hand.Cards[cardId];
+                CombatCard newcombatcard = new CombatCard(card.Name, card.Type, card.Effect, card.AttackPoints, card.Hero);
+                hand.DestroyCard(cardId);
+                int nrocartas = deck.Cards.Count;
+                int nro = nrorandom.Next(0,nrocartas + 1);
+                DrawCard(nro);
+                deck.AddCard(newcombatcard);
+
+            }
+
+            if (hand.Cards[cardId].GetType() == "SpecialCard")
+            {
+                SpecialCard card = hand.Cards[cardId];
+                SpecialCard newspecialcard = new SpecialCard(card.Name, card.Type, card.Effect);
+                hand.DestroyCard(cardId);
+                int nrocartas = deck.Cards.Count;
+                int nro = nrorandom.Next(0, nrocartas);
+                DrawCard(nro);
+                deck.AddCard(newspecialcard);
+            }
+
+            return;
+                throw new NotImplementedException();
         }
 
         public void FirstHand()
@@ -157,6 +230,16 @@ namespace Laboratorio_4_OOP_201902
             /*Debe obtener 10 cartas aleatorias del mazo y asignarlas a la mano.
             Utilice el metodo DrawCard con 10 numeros de id aleatorios.
             */
+            int a = 0;
+            Random nrorandom = new Random();
+            while (a < 10)
+            {
+                int nrocartas = deck.Cards.Count;
+                int nro = nrorandom.Next(0, nrocartas);
+                DrawCard(nro);
+                a++;
+            }
+
             throw new NotImplementedException();
         }
 
